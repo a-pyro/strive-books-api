@@ -30,6 +30,7 @@ export const errorHandler = (err, req, res, next) => {
   }
 
   if (!err.statusCode) {
+    console.log(err);
     return res.status(500).send({
       success: false,
       message: 'internal server error',
