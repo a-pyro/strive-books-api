@@ -9,10 +9,7 @@ import {
   errorHandler,
   routeNotFoundHandler,
 } from './middlewares/errors/errorHandling.js';
-
-const currentFile = fileURLToPath(import.meta.url);
-const currentFolder = dirname(currentFile);
-const publicFolder = join(currentFolder, '../public');
+import ErrorResponse from './utils/errorResponse.js';
 
 const app = express();
 
@@ -20,8 +17,24 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
-app.use(cors());
-// app.use(express.static(publicFolder)); non serve + uso cloudinary
+const whiteList = [process.env.FE_URL_DEV, process.env.FE_URL_PROD];
+// da configurare anke su heroku
+
+const corsOptions = {
+  origin: function (origin, next) {
+    if (whiteList.indexOf(origin) !== -1) {
+      console.log('ORIGIN: ', origin);
+      //origin trovata in whitelist
+      next(null, true);
+    } else {
+      // origin non trovata in white, sucati i cors
+      next(new ErrorResponse(`NOT ALLOWED BY CORS`));
+    }
+  },
+};
+
+app.use(cors(corsOptions));
+
 app.use(express.json());
 
 app.use('/products', productsRoutes);
