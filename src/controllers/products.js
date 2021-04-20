@@ -149,7 +149,7 @@ export const uploadProductPic = async (req, res, next) => {
       }, []);
       await writeProducts(newProducts);
       // await writeProductsPics(filename, buffer); non serve scrivere, vado su cloudinary
-      console.log(req.file);
+      // console.log(req.file);
       res.status(200).send({ success: true, cloudinaryUrl: req.file.path });
     } else {
       next(new ErrorResponse('Product not found', 404));

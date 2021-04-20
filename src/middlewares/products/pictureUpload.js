@@ -4,7 +4,7 @@ import { v2 as cloudinaryV4 } from 'cloudinary';
 import { extname } from 'path';
 import ErrorResponse from '../../utils/errorResponse.js';
 
-const multerUploadCloudinary = (req, res, next) => {
+const multerUploadCloudinary = () => {
   const cloudinaryStorage = new CloudinaryStorage({
     cloudinary: cloudinaryV4,
     params: {
@@ -16,6 +16,7 @@ const multerUploadCloudinary = (req, res, next) => {
     storage: cloudinaryStorage,
     fileFilter: function (req, file, next) {
       const acceptedExt = ['.png', '.jpg', '.gif', '.bmp', '.jpeg'];
+      console.log(file);
       if (!acceptedExt.includes(extname(file.originalname))) {
         return next(
           new ErrorResponse(
