@@ -27,7 +27,7 @@ const corsOptions = {
       next(null, true);
     } else {
       // origin non trovata in white, sucati i cors
-      next(new ErrorResponse(`NOT ALLOWED BY CORS`));
+      next(new ErrorResponse(`NOT ALLOWED BY CORS`, 403));
     }
   },
 };
