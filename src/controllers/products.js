@@ -130,16 +130,16 @@ export const uploadProductPic = async (req, res, next) => {
   try {
     const products = await fetchProducts();
     if (products.some((prod) => prod._id === req.params.id)) {
-      console.log(req.file);
-      const { buffer, originalname } = req.file;
-      const filename = req.params.id + extname(originalname);
-      const imgUrl = `${req.protocol}://${req.get(
-        'host'
-      )}/img/products/${filename}`;
-      //scrivo nel file url
+      // console.log(req.file);
+      // const { buffer, originalname } = req.file;
+      // const filename = req.params.id + extname(originalname);
+      // const imgUrl = `${req.protocol}://${req.get(
+      //   'host'
+      // )}/img/products/${filename}`;
+      // //scrivo nel file url
       const newProducts = products.reduce((acc, cv) => {
         if (cv._id === req.params.id) {
-          cv.imgUrl = imgUrl;
+          cv.imgUrl = req.file.path;
           cv.updatedAt = new Date();
           acc.push(cv);
           return acc;
@@ -148,8 +148,9 @@ export const uploadProductPic = async (req, res, next) => {
         return acc;
       }, []);
       await writeProducts(newProducts);
-      await writeProductsPics(filename, buffer);
-      res.status(200).send({ success: true, imgUrl: `${imgUrl}` });
+      // await writeProductsPics(filename, buffer); non serve scrivere, vado su cloudinary
+      console.log(req.file);
+      res.status(200).send({ success: true, cloudinaryUrl: req.file.path });
     } else {
       next(new ErrorResponse('Product not found', 404));
     }

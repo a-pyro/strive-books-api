@@ -1,7 +1,19 @@
 import multer from 'multer';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
+import { v2 as cloudinaryV4 } from 'cloudinary';
 import { extname } from 'path';
-const multerValidation = (req, res, next) => {
+import ErrorResponse from '../../utils/errorResponse.js';
+
+const multerUploadCloudinary = (req, res, next) => {
+  const cloudinaryStorage = new CloudinaryStorage({
+    cloudinary: cloudinaryV4,
+    params: {
+      folder: 'strivezon',
+    },
+  });
+
   const upload = multer({
+    storage: cloudinaryStorage,
     fileFilter: function (req, file, next) {
       const acceptedExt = ['.png', '.jpg', '.gif', '.bmp', '.jpeg'];
       if (!acceptedExt.includes(extname(file.originalname))) {
@@ -18,5 +30,5 @@ const multerValidation = (req, res, next) => {
   });
   return upload.single('productPic');
 };
-export default multerValidation;
-//la scto riscrivendo per integrare cloudinary
+
+export default multerUploadCloudinary;

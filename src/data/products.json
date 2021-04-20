@@ -7,7 +7,7 @@
     "category": "smartphones",
     "_id": "7f17eb6a-4df7-455f-8380-e53c2418f5f8",
     "createdAt": "2021-04-19T12:14:01.881Z",
-    "updatedAt": "2021-04-19T15:38:16.867Z",
+    "updatedAt": "2021-04-20T13:41:40.556Z",
     "imgUrl": "http://localhost:3001/img/products/7f17eb6a-4df7-455f-8380-e53c2418f5f8.jpeg"
   },
   {
@@ -18,7 +18,8 @@
     "category": "earphones",
     "_id": "c741e996-f23a-44f7-a9b4-ad8190f49a38",
     "createdAt": "2021-04-19T12:17:05.884Z",
-    "updatedAt": "2021-04-19T12:17:05.884Z"
+    "updatedAt": "2021-04-20T14:09:26.101Z",
+    "imgUrl": "https://res.cloudinary.com/dhwociyre/image/upload/v1618927765/strivezon/yguvqevh9nsbi0dzhv7m.jpg"
   },
   {
     "name": "Silicon Cover Blue",

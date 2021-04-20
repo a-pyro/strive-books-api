@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(cors());
-app.use(express.static(publicFolder));
+// app.use(express.static(publicFolder)); non serve + uso cloudinary
 app.use(express.json());
 
 app.use('/products', productsRoutes);
@@ -31,4 +31,11 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, console.log(`server running on port ${PORT} 🏃‍♂️`));
+app.listen(PORT, () => {
+  if (process.env.NODE_ENV === 'production') {
+    // no need to configure it manually on Heroku
+    console.log('Server running on cloud on port: ', PORT);
+  } else {
+    console.log('Server running locally on port: ', PORT);
+  }
+});

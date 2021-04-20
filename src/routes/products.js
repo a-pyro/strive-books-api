@@ -9,12 +9,12 @@ import {
   getProductsByQuery,
 } from '../controllers/products.js';
 import {
-  multerValidation,
   validateProduct,
   validateProductSchema,
 } from '../middlewares/validation/productsValidation.js';
-import multerValidation from '../middlewares/validation/multerValidation.js';
-const upload = multerValidation();
+// import multerValidation from '../middlewares/validation/multerValidation.js';
+import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
+const upload = multerUploadCloudinary();
 const router = Router();
 
 router
@@ -28,6 +28,7 @@ router
   .put(validateProductSchema, modifyProduct)
   .delete(deleteProduct);
 
+// router.route('/:id/upload').post(upload, uploadProductPic);
 router.route('/:id/upload').post(upload, uploadProductPic);
 
 router.route('/:id/reviews').get(getProductReviews);
