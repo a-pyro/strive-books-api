@@ -3,8 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import productsRoutes from './routes/products.js';
 import reviewsRoutes from './routes/reviews.js';
-import { fileURLToPath } from 'url';
-import { join, dirname } from 'path';
+
 import {
   errorHandler,
   routeNotFoundHandler,
