@@ -1,0 +1,34 @@
+[
+  {
+    "name": "iPhone 45",
+    "description": "straight from the future",
+    "brand": "apple",
+    "price": 10000000,
+    "category": "smartphones",
+    "_id": "7f17eb6a-4df7-455f-8380-e53c2418f5f8",
+    "createdAt": "2021-04-19T12:14:01.881Z",
+    "updatedAt": "2021-04-19T15:38:16.867Z",
+    "imgUrl": "http://localhost:3001/img/products/7f17eb6a-4df7-455f-8380-e53c2418f5f8.jpeg"
+  },
+  {
+    "name": "Airpods Pro",
+    "description": "Liste to your music like a boss, quietly",
+    "brand": "apple",
+    "price": 200,
+    "category": "earphones",
+    "_id": "c741e996-f23a-44f7-a9b4-ad8190f49a38",
+    "createdAt": "2021-04-19T12:17:05.884Z",
+    "updatedAt": "2021-04-19T12:17:05.884Z"
+  },
+  {
+    "name": "Silicon Cover Blue",
+    "description": "Protect your phone and your wallet, don't let you iphone break",
+    "brand": "apple",
+    "price": 50,
+    "category": "accessories",
+    "_id": "566bd6af-685c-4720-b8ca-3210e230e260",
+    "createdAt": "2021-04-19T12:19:35.104Z",
+    "updatedAt": "2021-04-19T13:37:36.281Z",
+    "imgUrl": "http://localhost:3001/img/products/566bd6af-685c-4720-b8ca-3210e230e260.jpeg"
+  }
+]
