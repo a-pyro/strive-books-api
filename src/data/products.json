@@ -1,1 +1,46 @@
-[{"name":"iPhone 45","description":"straight from the future","brand":"apple","price":10000000,"category":"smartphones","_id":"7f17eb6a-4df7-455f-8380-e53c2418f5f8","createdAt":"2021-04-19T12:14:01.881Z","updatedAt":"2021-04-20T16:16:55.366Z","imgUrl":"https://res.cloudinary.com/dhwociyre/image/upload/v1618935415/strivezon/hr7othkigutg2evswgy1.jpg"},{"name":"Airpods Pro","description":"Liste to your music like a boss, quietly","brand":"apple","price":200,"category":"earphones","_id":"c741e996-f23a-44f7-a9b4-ad8190f49a38","createdAt":"2021-04-19T12:17:05.884Z","updatedAt":"2021-04-20T14:09:26.101Z","imgUrl":"https://res.cloudinary.com/dhwociyre/image/upload/v1618927765/strivezon/yguvqevh9nsbi0dzhv7m.jpg"},{"name":"Silicon Cover Blue","description":"Protect your phone and your wallet, don't let you iphone break","brand":"apple","price":50,"category":"accessories","_id":"566bd6af-685c-4720-b8ca-3210e230e260","createdAt":"2021-04-19T12:19:35.104Z","updatedAt":"2021-04-20T14:11:26.512Z","imgUrl":"https://res.cloudinary.com/dhwociyre/image/upload/v1618927886/strivezon/jyk60srxw8mabupfv8we.jpg"}]
+[
+  {
+    "name": "iPhone 45",
+    "description": "straight from the future",
+    "brand": "apple",
+    "price": 10000000,
+    "category": "smartphones",
+    "_id": "7f17eb6a-4df7-455f-8380-e53c2418f5f8",
+    "createdAt": "2021-04-19T12:14:01.881Z",
+    "updatedAt": "2021-04-20T20:33:25.648Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618950805/strivezon/qlh6af4hajug5jaz2e1g.jpg"
+  },
+  {
+    "name": "Airpods Pro",
+    "description": "Liste to your music like a boss, quietly",
+    "brand": "apple",
+    "price": 200,
+    "category": "earphones",
+    "_id": "c741e996-f23a-44f7-a9b4-ad8190f49a38",
+    "createdAt": "2021-04-19T12:17:05.884Z",
+    "updatedAt": "2021-04-20T14:09:26.101Z",
+    "imgUrl": "https://res.cloudinary.com/dhwociyre/image/upload/v1618927765/strivezon/yguvqevh9nsbi0dzhv7m.jpg"
+  },
+  {
+    "name": "Silicon Cover Blue",
+    "description": "Protect your phone and your wallet, don't let you iphone break",
+    "brand": "apple",
+    "price": 50,
+    "category": "accessories",
+    "_id": "566bd6af-685c-4720-b8ca-3210e230e260",
+    "createdAt": "2021-04-19T12:19:35.104Z",
+    "updatedAt": "2021-04-20T20:34:04.481Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618950844/strivezon/qohzszwmbw3hwane7xch.jpg"
+  },
+  {
+    "name": "Macbook Pro",
+    "description": "Potente e compatto, ideale per il viaggio e per codare fino a tarda notte come sto facendo anche se dovrei andare a dormire",
+    "brand": "Apple",
+    "price": "1500",
+    "category": "laptops",
+    "_id": "18c50be9-9cf2-44cb-a90f-2f99622266f2",
+    "createdAt": "2021-04-20T22:09:41.257Z",
+    "updatedAt": "2021-04-20T22:09:42.239Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618956581/strivezon/jvb1d3dzfilgophc1ewo.jpg"
+  }
+]
