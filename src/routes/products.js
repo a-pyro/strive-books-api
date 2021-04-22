@@ -8,11 +8,9 @@ import {
   getProductReviews,
   getProductsByQuery,
   getProductsCsv,
+  getProductPDF,
 } from '../controllers/products.js';
-import {
-  validateProduct,
-  validateProductSchema,
-} from '../middlewares/validation/productsValidation.js';
+import { validateProduct } from '../middlewares/validation/productsValidation.js';
 // import multerValidation from '../middlewares/validation/multerValidation.js';
 import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
 const upload = multerUploadCloudinary();
@@ -32,5 +30,7 @@ router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
 router.route('/:id/upload').post(upload, uploadProductPic);
 
 router.route('/:id/reviews').get(getProductReviews);
+
+router.route('/:id/pdf').get(getProductPDF);
 
 export default router;

@@ -197,3 +197,18 @@ export const getProductReviews = async (req, res, next) => {
     next(error);
   }
 };
+
+// @desc    GET product pdf
+// @route   GET /products/:id/pdf
+
+export const getProductPDF = async (req, res, next) => {
+  try {
+    const products = await fetchProducts();
+    if (products.some((prod) => prod._id === req.params.id)) {
+    } else {
+      next(new ErrorResponse('Product not found', 404));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
