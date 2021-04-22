@@ -1,12 +1,12 @@
 import multer from 'multer';
 import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { v2 as cloudinaryV4 } from 'cloudinary';
+import { v2 as cloudinaryV2 } from 'cloudinary';
 import { extname } from 'path';
 import ErrorResponse from '../../utils/errorResponse.js';
 
 const multerUploadCloudinary = () => {
   const cloudinaryStorage = new CloudinaryStorage({
-    cloudinary: cloudinaryV4,
+    cloudinary: cloudinaryV2,
     params: {
       folder: 'strivezon',
     },
