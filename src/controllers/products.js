@@ -7,6 +7,7 @@ import {
   writeProductsPics,
 } from '../utils/fsUtils.js';
 import { extname } from 'path';
+import { createCSV } from '../utils/csv/csv.js';
 
 // @desc    Get all products
 // @route   GET /products
@@ -20,6 +21,17 @@ export const getProducts = async (req, res, next) => {
   }
 };
 
+// @desc    Get  products CSV
+// @route   GET /products/exportToCSV
+export const getProductsCsv = async (req, res, next) => {
+  try {
+    res.attachment('products.csv');
+    await createCSV(res);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 // @desc    Get all products by query
 // @route   GET /products?
 export const getProductsByQuery = async (req, res, next) => {

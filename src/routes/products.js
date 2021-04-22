@@ -7,6 +7,7 @@ import {
   uploadProductPic,
   getProductReviews,
   getProductsByQuery,
+  getProductsCsv,
 } from '../controllers/products.js';
 import {
   validateProduct,
@@ -22,11 +23,10 @@ router
   .get(getProductsByQuery, getProducts)
   .post(validateProduct, addProduct);
 
+router.route('/exportToCSV').get(getProductsCsv);
+
 // router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
-router
-  .route('/:id')
-  .put(validateProductSchema, modifyProduct)
-  .delete(deleteProduct);
+router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
 
 // router.route('/:id/upload').post(upload, uploadProductPic);
 router.route('/:id/upload').post(upload, uploadProductPic);
