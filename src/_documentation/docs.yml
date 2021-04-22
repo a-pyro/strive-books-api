@@ -1,0 +1,226 @@
+openapi: 3.0.1
+info:
+  title: StriveZon API
+  description: simple marketplace
+  version: 0.0.1
+servers:
+  - url: http://localhost:3001
+    description: Local server
+  - url: https://strivezon-api.herokuapp.com
+    description: Deployed server
+tags:
+  - name: products
+    description: Products operations
+  - name: reviews
+    description: Reviews operation
+paths:
+  /products:
+    get:
+      tags:
+        - products
+      summary: Returns a list of products.
+      description: Optional extended description in CommonMark or HTML.
+      parameters:
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter products list by category
+      responses:
+        '200': # status code
+          description: A list of books
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          $ref: '#/components/responses/GenericServerError'
+    post:
+      tags:
+        - products
+      summary: add product
+      description: Adds a new product
+      requestBody:
+        description: The object
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '201': # status code
+          description: The ID of the newly created book
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          $ref: '#/components/responses/BadRequest'
+  /products/{id}:
+    get:
+      tags:
+        - products
+      summary: get single product
+      description: Retrieve single product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Book to retrieve
+      responses:
+        '200': # status code
+          description: The single Book
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      tags:
+        - products
+      description: Update an existing product
+      summary: Update product
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the Book to update
+      requestBody:
+        description: Fields to update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        '200': # status code
+          description: edited product
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+        - products
+      description: Delete a specific product by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product to delete
+      responses:
+        '200': # status code
+          description: The single product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /products/{id}/upload:
+    post:
+      tags:
+        - products
+      description: upload product pic
+      summary: upload product pic
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The ID of the product to delete
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                avatar:
+                  type: string
+                  format: binary
+      responses:
+        '200': # status code
+          description: Ok
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /products/exportCSV:
+    get:
+      tags:
+        - products
+      description: get csv of products
+      summary: get csv of products
+      responses:
+        '200': # status code
+          description: a downloadable csv file
+
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+components:
+  responses:
+    NotFound:
+      description: The specific resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: Some problems with your request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Bearer token missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    GenericServerError:
+      description: A problem on the server occurred
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        brand:
+          type: string
+        description:
+          type: string
+        price:
+          type: number
+        category:
+          type: string
+    Review:
+      type: object
+      properties:
+        comment:
+          type: string
+        rate:
+          type: number
+        productId:
+          type: string
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

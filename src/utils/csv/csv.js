@@ -1,5 +1,4 @@
 import { Transform } from 'json2csv';
-import { getProducts } from '../../controllers/products.js';
 import fs from 'fs-extra';
 const { createReadStream } = fs;
 import { pipeline } from 'stream';

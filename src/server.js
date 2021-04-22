@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import productsRoutes from './routes/products.js';
 import reviewsRoutes from './routes/reviews.js';
+import homeRoute from './routes/home.js';
 
 import {
   errorHandler,
@@ -31,9 +32,10 @@ const corsOptions = {
     }
   },
 };
+app.use('/', homeRoute);
 
-app.use(cors());
-// app.use(cors(corsOptions));
+// app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
