@@ -8,6 +8,8 @@ import {
 } from '../utils/fsUtils.js';
 import { extname } from 'path';
 import { createCSV } from '../utils/csv/csv.js';
+import { generatePDF } from '../utils/pdf/index.js';
+import { pipeline } from 'stream';
 
 // @desc    Get all products
 // @route   GET /products
@@ -205,6 +207,11 @@ export const getProductPDF = async (req, res, next) => {
   try {
     const products = await fetchProducts();
     if (products.some((prod) => prod._id === req.params.id)) {
+      const data = products.find((prod) => prod._id === req.params.id);
+      const sourceStream = await generatePDF(data);
+      res.attachment('data.pdf');
+      pipeline(sourceStream, res);
+      res.send('ciao');
     } else {
       next(new ErrorResponse('Product not found', 404));
     }
