@@ -11,7 +11,6 @@ import {
   getProductPDF,
 } from '../controllers/products.js';
 import { validateProduct } from '../middlewares/validation/productsValidation.js';
-// import multerValidation from '../middlewares/validation/multerValidation.js';
 import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
 const upload = multerUploadCloudinary();
 const router = Router();

@@ -4,6 +4,9 @@ import cors from 'cors';
 import productsRoutes from './routes/products.js';
 import reviewsRoutes from './routes/reviews.js';
 import homeRoute from './routes/home.js';
+import mongoose from 'mongoose';
+
+const { connect } = mongoose;
 
 import {
   errorHandler,
@@ -13,9 +16,7 @@ import ErrorResponse from './utils/errorResponse.js';
 
 const app = express();
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+app.use(morgan('tiny'));
 
 const whiteList = [process.env.FE_URL_DEV, process.env.FE_URL_PROD];
 // da configurare anke su heroku
@@ -32,6 +33,7 @@ const corsOptions = {
     }
   },
 };
+
 app.use('/', homeRoute);
 
 app.use(cors());
@@ -46,11 +48,20 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, () => {
-  if (process.env.NODE_ENV === 'production') {
-    // no need to configure it manually on Heroku
-    console.log('Server running on cloud on port: ', PORT);
-  } else {
-    console.log('Server running locally on port: ', PORT);
-  }
-});
+connect(process.env.MONGO_CONNECTION, {
+  useNewUrlParser: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+})
+  .then(() => {
+    app.listen(PORT, () => {
+      if (process.env.NODE_ENV === 'production') {
+        // no need to configure it manually on Heroku
+        console.log('Server running on cloud on port: ', PORT);
+      } else {
+        console.log('Server running locally on port: ', PORT);
+      }
+    });
+  })
+  .catch((err) => console.log(err));
