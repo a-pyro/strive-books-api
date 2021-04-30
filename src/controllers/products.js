@@ -9,15 +9,53 @@ import {
 
 import { createCSV } from '../utils/csv/csv.js';
 import { generatePDF } from '../utils/pdf/index.js';
-import { asyncPipeline } from '../utils/streams/pipleline.js';
 import ProductModel from '../models/Products.js';
+import q2m from 'query-to-mongo';
+
+// @desc    Get all products by query
+// @route   GET /products?
+export const getProductsByQuery = async (req, res, next) => {
+  try {
+    if (Object.keys(req.query).length > 0) {
+      const query = q2m(req.query);
+      const total = await ProductModel.countDocuments(query.criteria);
+      console.log(query.criteria);
+      console.log(query.options);
+
+      const products = await ProductModel.find(
+        {
+          name: {
+            $regex: new RegExp(query.criteria.name, 'i'),
+          },
+        },
+        query.options.fields
+      )
+        .skip(query.options.skip)
+        .limit(query.options.limit)
+        .sort(query.options.sort);
+
+      res.status(200).send({
+        success: true,
+        links: query.links('/products', total),
+        data: products,
+      });
+    } else {
+      next();
+    }
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 
 // @desc    Get all products
-// @route   GET /products
+//& @route   GET /products
 export const getProducts = async (req, res, next) => {
   try {
     const products = await ProductModel.find({});
-    res.status(200).send({ success: true, data: products });
+    res
+      .status(200)
+      .send({ success: true, count: `${products.length}`, data: products });
   } catch (error) {
     next(error);
   }
@@ -31,53 +69,8 @@ export const getProduct = async (req, res, next) => {
   }
 };
 
-// @desc    Get  products CSV
-// @route   GET /products/exportToCSV
-export const getProductsCsv = async (req, res, next) => {
-  try {
-    res.attachment('products.csv');
-    await createCSV(res);
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-};
-// @desc    Get all products by query
-// @route   GET /products?
-export const getProductsByQuery = async (req, res, next) => {
-  try {
-    if (Object.keys(req.query).length > 0) {
-      const products = await fetchProducts();
-      let output = {};
-
-      // console.log(req.query);
-      // const output = products.filter((prod) => prod[req]);
-      for (const key in req.query) {
-        const query = key.toLowerCase();
-        const value = req.query[query].toLowerCase();
-        // console.log(query, ':', value);
-        // console.log(products);
-        // const found = products.filter((prod) => prod[query] === value);
-        // console.log(found);
-        // output[value] = [...found];
-        // console.log(query, value);
-        const found = products.filter((prod) => prod[query] === value);
-        output.push();
-      }
-
-      res.status(200).send({ success: true, data: output });
-    } else {
-      next();
-    }
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-};
-
 // @desc    add product
-// @route   POST /products
-
+//& @route   POST /products
 export const addProduct = async (req, res, next) => {
   try {
     const newProd = { ...req.body };
@@ -119,7 +112,7 @@ export const modifyProduct = async (req, res, next) => {
 };
 
 // @desc    delete product
-// @route   DELETE /products/:id
+//& @route   DELETE /products/:id
 
 export const deleteProduct = async (req, res, next) => {
   try {
@@ -133,6 +126,90 @@ export const deleteProduct = async (req, res, next) => {
   }
 };
 
+// REVIEWS--------------------------------------
+
+// @desc    add reviews for a product
+//& @route   POST /products/:id/reviews
+export const postReviewOnProductId = async (req, res, next) => {
+  try {
+    const rev = { ...req.body };
+    const savedRev = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          reviews: rev,
+        },
+      },
+      { runValidators: true, new: true, projection: { reviews: 1 } }
+    );
+
+    res.status(201).send({ success: true, data: savedRev });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getProductReviews = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const modifyReview = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+export const deleteReview = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+
+///::::::::::::::::::::::::::::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// ========== OTHERS ================
+///::::::::::::::::::::::::::::>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// @desc    GET product pdf
+// @route   GET /products/:id/pdf
+
+export const getProductPDF = async (req, res, next) => {
+  try {
+    const products = await fetchProducts();
+    if (products.some((prod) => prod._id === req.params.id)) {
+      const data = products.find((prod) => prod._id === req.params.id);
+      const sourceStream = await generatePDF(data);
+      res.attachment('data.pdf');
+
+      // pipeline(sourceStream, res, () => {
+
+      //   console.log('hi');
+      // });
+      await asyncPipeline(sourceStream, res);
+
+      res.send('ciao');
+    } else {
+      next(new ErrorResponse('Product not found', 404));
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// @desc    Get  products CSV
+// @route   GET /products/exportToCSV
+export const getProductsCsv = async (req, res, next) => {
+  try {
+    res.attachment('products.csv');
+    await createCSV(res);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
 // @desc    add image to product
 // @route   POST /products/:id/upload
 export const uploadProductPic = async (req, res, next) => {
@@ -165,91 +242,6 @@ export const uploadProductPic = async (req, res, next) => {
     }
   } catch (error) {
     console.log(error);
-    next(error);
-  }
-};
-
-// @desc    get reviews for a product
-// @route   GET /products/:id/reviews
-export const getProductReviews = async (req, res, next) => {
-  try {
-    const products = await fetchProducts();
-    if (products.some((prod) => prod._id === req.params.id)) {
-      const reviews = await fetchReviews();
-      const productReviews = reviews.filter(
-        (rev) => rev.productId === req.params.id
-      );
-      if (productReviews.length === 0) {
-        return res.status(200).send({
-          success: true,
-          message: 'no reviews available for that product',
-        });
-      }
-      res.status(200).send({ success: true, data: productReviews });
-    } else {
-      next(new ErrorResponse('Product not found', 404));
-    }
-  } catch (error) {
-    console.log(error);
-    next(error);
-  }
-};
-
-// @desc    GET product pdf
-// @route   GET /products/:id/pdf
-
-export const getProductPDF = async (req, res, next) => {
-  try {
-    const products = await fetchProducts();
-    if (products.some((prod) => prod._id === req.params.id)) {
-      const data = products.find((prod) => prod._id === req.params.id);
-      const sourceStream = await generatePDF(data);
-      res.attachment('data.pdf');
-
-      // pipeline(sourceStream, res, () => {
-
-      //   console.log('hi');
-      // });
-      await asyncPipeline(sourceStream, res);
-
-      res.send('ciao');
-    } else {
-      next(new ErrorResponse('Product not found', 404));
-    }
-  } catch (error) {
-    next(error);
-  }
-};
-
-// REVIEWS--------------------------------------
-export const postReviewOnProductId = async (req, res, next) => {
-  try {
-    const rev = { ...req.body };
-    const savedRev = await ProductModel.findByIdAndUpdate(
-      req.params.id,
-      {
-        $push: {
-          reviews: rev,
-        },
-      },
-      { runValidators: true, new: true, projection: { reviews: 1 } }
-    );
-
-    res.status(201).send({ success: true, data: savedRev });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const modifyReview = async (req, res, next) => {
-  try {
-  } catch (error) {
-    next(error);
-  }
-};
-export const deleteReview = async (req, res, next) => {
-  try {
-  } catch (error) {
     next(error);
   }
 };

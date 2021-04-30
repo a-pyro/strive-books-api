@@ -13,6 +13,7 @@ import {
   getProductsCsv,
   getProductPDF,
   postReviewOnProductId,
+  getProductsByQuery,
 } from '../controllers/products.js';
 // import { validateProduct } from '../middlewares/validation/productsValidation.js';
 // import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
@@ -34,7 +35,7 @@ router.route('/exportToCSV').get(getProductsCsv);
 // router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
 // router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
 
-router.route('/').get(getProducts).post(addProduct);
+router.route('/').get(getProductsByQuery, getProducts).post(addProduct);
 router.route('/:id').put(modifyProduct).delete(deleteProduct).get(getProduct);
 
 // router.route('/:id/upload').post(upload, uploadProductPic);
