@@ -7,6 +7,8 @@ import cartsRoutes from './routes/carts.js';
 import reviewsRoutes from './routes/reviews.js';
 import homeRoute from './routes/home.js';
 import mongoose from 'mongoose';
+import moduleName from 'module';
+import listEndpoints from 'express-list-endpoints';
 
 const { connect } = mongoose;
 
@@ -51,6 +53,8 @@ app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
+
+console.log(listEndpoints(app));
 
 connect(process.env.MONGO_CONNECTION, {
   useNewUrlParser: true,

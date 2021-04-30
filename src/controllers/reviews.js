@@ -60,25 +60,53 @@ export const addReview = async (req, res, next) => {
 // @desc    modify  review
 // @route   PUT /reviews/:id
 
+// export const modifyReview = async (req, res, next) => {
+//   try {
+//     const reviews = await fetchReviews();
+
+//     const findReview = reviews.filter((review) => review._id !== req.params.id);
+
+//     const modifiedReview = {
+//       _id: req.params.id,
+//       ...req.body,
+//       updatedAt: new Date(),
+//     };
+
+//     findReview.push(modifiedReview);
+
+//     await writeReviews(findReview);
+
+//     res.status(201).send("Edited successful", { _id: modifiedReview._id });
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
 export const modifyReview = async (req, res, next) => {
   try {
-    const reviews = await fetchReviews();
+    const modifiedReview = await ArticleModel.findOneAndUpdate(
+      {
+        _id: mongoose.Types.ObjectId(req.params.id),
+        "reviews._id": mongoose.Types.ObjectId(req.params.reviewId),
+      },
+      { $set: { "reviews.$": req.body } }, // The concept of the $ is pretty similar as having something like const $ = array.findIndex(item) => item._id === req.params.reviewId)
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
 
-    const findReview = reviews.filter((review) => review._id !== req.params.id);
-
-    const modifiedReview = {
-      _id: req.params.id,
-      ...req.body,
-      updatedAt: new Date(),
-    };
-
-    findReview.push(modifiedReview);
-
-    await writeReviews(findReview);
-
-    res.status(201).send("Edited successful", { _id: modifiedReview._id });
+    if (modifiedReview) {
+      res.status(201).send(modifiedReview);
+    } else {
+      res.status(400).send("Product id not found");
+      const error = new Error();
+      error.httpStatusCode = 404;
+      next(error);
+    }
   } catch (error) {
     console.log(error);
+    next(error);
   }
 };
 
