@@ -3,7 +3,8 @@ import ErrorResponse from '../utils/errorResponse.js';
 // GET /
 export const getUsers = async (req, res, next) => {
   try {
-    res.status(200).send({ success: true, data: 'getUsers' });
+    const users = await UserModel.find();
+    res.status(200).send({ success: true, data: users });
   } catch (error) {
     next(error);
   }
@@ -34,7 +35,12 @@ export const addUser = async (req, res, next) => {
 // PUT /:id
 export const editUser = async (req, res, next) => {
   try {
-    res.status(200).send({ success: true, data: 'editUser' });
+    const user = await UserModel.findByIdAndUpdate(req.params.id, req.body, {
+      runValidators: true,
+      new: true,
+    });
+    if (!user) return next(new ErrorResponse('resource not found'), 404);
+    res.status(200).send({ success: true, data: user });
   } catch (error) {
     next(error);
   }
@@ -43,6 +49,8 @@ export const editUser = async (req, res, next) => {
 // DELETE /:id
 export const deleteUser = async (req, res, next) => {
   try {
+    if (!user) return next(new ErrorResponse('resource not found'), 404);
+
     res.status(200).send({ success: true, data: 'deleteUser' });
   } catch (error) {
     next(error);
@@ -52,6 +60,7 @@ export const deleteUser = async (req, res, next) => {
 // POST /:id/purchaseHistory/
 export const addToPurchaseHistory = async (req, res, next) => {
   try {
+    if (!user) return next(new ErrorResponse('resource not found'), 404);
     res.status(200).send({ success: true, data: 'addToPurchaseHistory' });
   } catch (error) {
     next(error);
