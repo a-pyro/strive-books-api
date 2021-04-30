@@ -16,8 +16,7 @@ import ProductModel from '../models/Products.js';
 // @route   GET /products
 export const getProducts = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-
+    const products = await ProductModel.find({});
     res.status(200).send({ success: true, data: products });
   } catch (error) {
     next(error);
