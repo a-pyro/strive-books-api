@@ -124,14 +124,11 @@ export const modifyProduct = async (req, res, next) => {
 
 export const deleteProduct = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-    if (products.some((prod) => prod._id === req.params.id)) {
-      const newProducts = products.filter((prod) => prod._id !== req.params.id);
-      res.status(200).send({ success: true, message: 'product removed' });
-      await writeProducts(newProducts);
-    } else {
-      next(new ErrorResponse('Product not found', 404));
+    const prod = await ProductModel.findByIdAndDelete(req.params.id);
+    if (!prod) {
+      return next(new ErrorResponse('resource not found', 404));
     }
+    res.status(200).send({ success: true, message: 'product removed' });
   } catch (error) {
     next(error);
   }
@@ -228,10 +225,23 @@ export const getProductPDF = async (req, res, next) => {
 // REVIEWS--------------------------------------
 export const postReviewOnProductId = async (req, res, next) => {
   try {
+    const rev = { ...req.body };
+    const savedRev = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $push: {
+          reviews: rev,
+        },
+      },
+      { runValidators: true, new: true, projection: { reviews: 1 } }
+    );
+
+    res.status(201).send({ success: true, data: savedRev });
   } catch (error) {
     next(error);
   }
 };
+
 export const modifyReview = async (req, res, next) => {
   try {
   } catch (error) {
