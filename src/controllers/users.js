@@ -53,9 +53,9 @@ export const editUser = async (req, res, next) => {
 // DELETE /:id
 export const deleteUser = async (req, res, next) => {
   try {
+    const user = await UserModel.findByIdAndDelete(req.params.id);
     if (!user) return next(new ErrorResponse('resource not found'), 404);
-
-    res.status(200).send({ success: true, data: 'deleteUser' });
+    res.status(200).send({ success: true, message: 'removed' });
   } catch (error) {
     next(error);
   }

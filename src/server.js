@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import productsRoutes from './routes/products.js';
 import usersRoutes from './routes/users.js';
+import cartsRoutes from './routes/carts.js';
 import reviewsRoutes from './routes/reviews.js';
 import homeRoute from './routes/home.js';
 import mongoose from 'mongoose';
@@ -44,6 +45,7 @@ app.use(express.json());
 
 app.use('/products', productsRoutes);
 app.use('/users', usersRoutes);
+app.use('/carts', cartsRoutes);
 // app.use('/reviews', reviewsRoutes);
 app.use(routeNotFoundHandler);
 app.use(errorHandler);

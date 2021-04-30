@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { CartSchema } from './Carts.js';
 const { Schema, model } = mongoose;
 
 const UserSchema = new Schema(
@@ -33,6 +34,7 @@ const UserSchema = new Schema(
         date: Date,
       },
     ],
+    cart: [CartSchema],
   },
   { timestamps: true }
 );
