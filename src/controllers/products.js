@@ -37,10 +37,12 @@ export const getProductsByQuery = async (req, res, next) => {
 
       res.status(200).send({
         success: true,
-        links: `${req.protocol}://${req.get('host')}${query.links(
-          '/products',
-          total
-        )}`,
+        next: `${req.protocol}://${req.get('host')}${
+          query.links('/products', total).next
+        }`,
+        previous: `${req.protocol}://${req.get('host')}${
+          query.links('/products', total).previous
+        }`,
         total,
         data: products,
       });
