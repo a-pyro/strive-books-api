@@ -19,10 +19,8 @@ const UserSchema = new Schema(
     age: {
       type: Number,
       min: [18, 'You are too young!'],
-      max: 65,
       default: 18,
     },
-    professions: [String],
     purchaseHistory: [
       {
         id: String,

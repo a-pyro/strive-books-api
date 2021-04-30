@@ -1,7 +1,8 @@
+import UserModel from '../models/Users.js';
 // GET /
 export const getUsers = async (req, res, next) => {
   try {
-    res.status(200).send('getUsers');
+    res.status(200).send({ success: true, data: 'getUsers' });
   } catch (error) {
     next(error);
   }
@@ -10,7 +11,10 @@ export const getUsers = async (req, res, next) => {
 // POST /
 export const addUser = async (req, res, next) => {
   try {
-    res.status(200).send('addUser');
+    const newUser = { ...req.body };
+    const savedUser = await UserModel.create(newUser);
+
+    res.status(201).send({ success: true, data: savedUser });
   } catch (error) {
     next(error);
   }
@@ -19,7 +23,7 @@ export const addUser = async (req, res, next) => {
 // PUT /:id
 export const editUser = async (req, res, next) => {
   try {
-    res.status(200).send('editUser');
+    res.status(200).send({ success: true, data: 'editUser' });
   } catch (error) {
     next(error);
   }
@@ -28,7 +32,7 @@ export const editUser = async (req, res, next) => {
 // DELETE /:id
 export const deleteUser = async (req, res, next) => {
   try {
-    res.status(200).send('deleteUser');
+    res.status(200).send({ success: true, data: 'deleteUser' });
   } catch (error) {
     next(error);
   }
@@ -37,7 +41,7 @@ export const deleteUser = async (req, res, next) => {
 // POST /:id/purchaseHistory/
 export const addToPurchaseHistory = async (req, res, next) => {
   try {
-    res.status(200).send('addToPurchaseHistory');
+    res.status(200).send({ success: true, data: 'addToPurchaseHistory' });
   } catch (error) {
     next(error);
   }
@@ -46,7 +50,7 @@ export const addToPurchaseHistory = async (req, res, next) => {
 // GET /:id/purchaseHistory/
 export const getPurchaseHistory = async (req, res, next) => {
   try {
-    res.status(200).send('getPurchaseHistory');
+    res.status(200).send({ success: true, data: 'getPurchaseHistory' });
   } catch (error) {
     next(error);
   }
@@ -55,7 +59,9 @@ export const getPurchaseHistory = async (req, res, next) => {
 // GET /:id/purchaseHistory/:productId
 export const getProductFromPurchaseHistory = async (req, res, next) => {
   try {
-    res.status(200).send('getProductFromPurchaseHistory');
+    res
+      .status(200)
+      .send({ success: true, data: 'getProductFromPurchaseHistory' });
   } catch (error) {
     next(error);
   }
@@ -64,7 +70,7 @@ export const getProductFromPurchaseHistory = async (req, res, next) => {
 // DELETE /:id/purchaseHistory/:productId
 export const deleteFromPurchseHistory = async (req, res, next) => {
   try {
-    res.status(200).send('deleteFromPurchseHistory');
+    res.status(200).send({ success: true, data: 'deleteFromPurchseHistory' });
   } catch (error) {
     next(error);
   }
@@ -73,7 +79,7 @@ export const deleteFromPurchseHistory = async (req, res, next) => {
 // PUT /:id/purchaseHistory/:productId
 export const editBookInPurchaseHistory = async (req, res, next) => {
   try {
-    res.status(200).send('editBookInPurchaseHistory');
+    res.status(200).send({ success: true, data: 'editBookInPurchaseHistory' });
   } catch (error) {
     next(error);
   }
