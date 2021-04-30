@@ -35,15 +35,9 @@ export const getProductsByQuery = async (req, res, next) => {
         .limit(query.options.limit)
         .sort(query.options.sort);
 
-      console.log(query.links('/products', total));
       res.status(200).send({
         success: true,
-        next: `${req.protocol}s://${req.get('host')}${
-          query.links('/products', total).next
-        }`,
-        previous: `${req.protocol}s://${req.get('host')}${
-          query.links('/products', total).last
-        }`,
+        links: query.links('/products', total),
         total,
         data: products,
       });

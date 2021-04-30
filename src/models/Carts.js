@@ -4,9 +4,7 @@ const { Schema, model } = mongoose;
 
 export const CartSchema = new Schema(
   {
-    products: [
-      { productId: String, name: String, price: Number, quantity: Number },
-    ],
+    products: [{ type: Schema.Types.ObjectId, ref: 'Product' }],
     status: { type: String, enum: ['active', 'expired', 'paid'] },
   },
   { timestamps: true }
