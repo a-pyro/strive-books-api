@@ -34,8 +34,8 @@ const corsOptions = {
 };
 app.use('/', homeRoute);
 
-// app.use(cors());
-app.use(cors(corsOptions));
+app.use(cors());
+// app.use(cors(corsOptions));
 
 app.use(express.json());
 

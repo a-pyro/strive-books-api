@@ -1,1 +1,79 @@
-[{"name":"iPhone 45","description":"straight from the future","brand":"apple","price":10000000,"category":"smartphones","_id":"7f17eb6a-4df7-455f-8380-e53c2418f5f8","createdAt":"2021-04-19T12:14:01.881Z","updatedAt":"2021-04-20T20:33:25.648Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1618950805/strivezon/qlh6af4hajug5jaz2e1g.jpg"},{"name":"Airpods Pro","description":"Liste to your music like a boss, quietly","brand":"apple","price":200,"category":"earphones","_id":"c741e996-f23a-44f7-a9b4-ad8190f49a38","createdAt":"2021-04-19T12:17:05.884Z","updatedAt":"2021-04-20T14:09:26.101Z","imgUrl":"https://res.cloudinary.com/dhwociyre/image/upload/v1618927765/strivezon/yguvqevh9nsbi0dzhv7m.jpg"},{"name":"Silicon Cover Blue","description":"Protect your phone and your wallet, don't let you iphone break","brand":"apple","price":50,"category":"accessories","_id":"566bd6af-685c-4720-b8ca-3210e230e260","createdAt":"2021-04-19T12:19:35.104Z","updatedAt":"2021-04-20T20:34:04.481Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1618950844/strivezon/qohzszwmbw3hwane7xch.jpg"},{"name":"Macbook Pro","description":"Potente e compatto, ideale per il viaggio e per codare fino a tarda notte come sto facendo anche se dovrei andare a dormire","brand":"Apple","price":"1500","category":"laptops","_id":"18c50be9-9cf2-44cb-a90f-2f99622266f2","createdAt":"2021-04-20T22:09:41.257Z","updatedAt":"2021-04-20T22:09:42.239Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1618956581/strivezon/jvb1d3dzfilgophc1ewo.jpg"},{"name":"Ardi Germenji","description":"bellissimo","brand":"germenjistylr","price":"32322","category":"maschio","_id":"cfdef3e7-65ee-416c-9310-6ee89a0a3d46","createdAt":"2021-04-24T23:54:50.879Z","updatedAt":"2021-04-24T23:54:51.865Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1619308491/strivezon/osjxc8sgzr8wtkpgnqf9.jpg"},{"name":"sdsadd","description":"sadsdas","brand":"sadasdsad","price":"0244242","category":"asdasdasdfas","_id":"e19a4f6c-a4b2-4d94-b837-b4eca889246f","createdAt":"2021-04-24T23:58:11.604Z","updatedAt":"2021-04-24T23:58:12.397Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1619308692/strivezon/ynw5hjx1ag3m6wyd48rp.jpg"},{"name":"Ardi Germenji","description":"vnvnv","brand":"queen","price":"1","category":"docuseries","_id":"2ab92fc3-5e70-44b2-a517-6f7507a4f259","createdAt":"2021-04-25T00:21:41.151Z","updatedAt":"2021-04-25T00:21:42.177Z","imgUrl":"https://res.cloudinary.com/a-pyro/image/upload/v1619310101/strivezon/ry8zvmoqopcfd8ttmgjo.jpg"}]
+[
+  {
+    "name": "iPhone 45",
+    "description": "straight from the future",
+    "brand": "apple",
+    "price": 10000000,
+    "category": "smartphones",
+    "_id": "7f17eb6a-4df7-455f-8380-e53c2418f5f8",
+    "createdAt": "2021-04-19T12:14:01.881Z",
+    "updatedAt": "2021-04-20T20:33:25.648Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618950805/strivezon/qlh6af4hajug5jaz2e1g.jpg"
+  },
+  {
+    "name": "Airpods Pro",
+    "description": "Liste to your music like a boss, quietly",
+    "brand": "apple",
+    "price": 200,
+    "category": "earphones",
+    "_id": "c741e996-f23a-44f7-a9b4-ad8190f49a38",
+    "createdAt": "2021-04-19T12:17:05.884Z",
+    "updatedAt": "2021-04-20T14:09:26.101Z",
+    "imgUrl": "https://res.cloudinary.com/dhwociyre/image/upload/v1618927765/strivezon/yguvqevh9nsbi0dzhv7m.jpg"
+  },
+  {
+    "name": "Silicon Cover Blue",
+    "description": "Protect your phone and your wallet, don't let you iphone break",
+    "brand": "apple",
+    "price": 50,
+    "category": "accessories",
+    "_id": "566bd6af-685c-4720-b8ca-3210e230e260",
+    "createdAt": "2021-04-19T12:19:35.104Z",
+    "updatedAt": "2021-04-20T20:34:04.481Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618950844/strivezon/qohzszwmbw3hwane7xch.jpg"
+  },
+  {
+    "name": "Macbook Pro",
+    "description": "Potente e compatto, ideale per il viaggio e per codare fino a tarda notte come sto facendo anche se dovrei andare a dormire",
+    "brand": "Apple",
+    "price": "1500",
+    "category": "laptops",
+    "_id": "18c50be9-9cf2-44cb-a90f-2f99622266f2",
+    "createdAt": "2021-04-20T22:09:41.257Z",
+    "updatedAt": "2021-04-20T22:09:42.239Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1618956581/strivezon/jvb1d3dzfilgophc1ewo.jpg"
+  },
+  {
+    "name": "Ardi Germenji",
+    "description": "bellissimo",
+    "brand": "germenjistylr",
+    "price": "32322",
+    "category": "maschio",
+    "_id": "cfdef3e7-65ee-416c-9310-6ee89a0a3d46",
+    "createdAt": "2021-04-24T23:54:50.879Z",
+    "updatedAt": "2021-04-24T23:54:51.865Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1619308491/strivezon/osjxc8sgzr8wtkpgnqf9.jpg"
+  },
+  {
+    "name": "sdsadd",
+    "description": "sadsdas",
+    "brand": "sadasdsad",
+    "price": "0244242",
+    "category": "asdasdasdfas",
+    "_id": "e19a4f6c-a4b2-4d94-b837-b4eca889246f",
+    "createdAt": "2021-04-24T23:58:11.604Z",
+    "updatedAt": "2021-04-24T23:58:12.397Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1619308692/strivezon/ynw5hjx1ag3m6wyd48rp.jpg"
+  },
+  {
+    "name": "Ardi Germenji",
+    "description": "vnvnv",
+    "brand": "queen",
+    "price": "1",
+    "category": "docuseries",
+    "_id": "2ab92fc3-5e70-44b2-a517-6f7507a4f259",
+    "createdAt": "2021-04-25T00:21:41.151Z",
+    "updatedAt": "2021-04-25T00:21:42.177Z",
+    "imgUrl": "https://res.cloudinary.com/a-pyro/image/upload/v1619310101/strivezon/ry8zvmoqopcfd8ttmgjo.jpg"
+  }
+]
