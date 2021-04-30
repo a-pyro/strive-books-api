@@ -10,6 +10,7 @@ import {
 import { createCSV } from "../utils/csv/csv.js";
 import { generatePDF } from "../utils/pdf/index.js";
 import ProductModel from "../models/Products.js";
+import mongoose from "mongoose";
 import q2m from "query-to-mongo";
 
 // @desc    Get all products by query
@@ -159,21 +160,70 @@ export const postReviewOnProductId = async (req, res, next) => {
 
 export const getProductReviews = async (req, res, next) => {
   try {
+    // deconstructed reviews object uses mongoose method findbyId with Product id from the params.
+    const { reviews } = await ProductModel.findById(req.params.id, {
+      reviews: 1,
+      _id: 0,
+    });
+
+    res.status(200).send(reviews);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
 export const modifyReview = async (req, res, next) => {
   try {
+    const modifiedReview = await ProductModel.findOneAndUpdate(
+      {
+        _id: mongoose.Types.ObjectId(req.params.id),
+        "reviews._id": mongoose.Types.ObjectId(req.params.revId),
+      },
+      { $set: { "reviews.$": req.body } }, // The concept of the $ is pretty similar as having something like const $ = array.findIndex(item) => item._id === req.params.reviewId)
+      {
+        runValidators: true,
+        new: true,
+      }
+    );
+
+    if (modifiedReview) {
+      res.status(201).send(modifiedReview);
+    } else {
+      res.status(400).send("Product id not found");
+      const error = new Error();
+      error.httpStatusCode = 404;
+      next(error);
+    }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
 export const deleteReview = async (req, res, next) => {
   try {
+    const modifiedReview = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      {
+        $pull: {
+          reviews: { _id: mongoose.Types.ObjectId(req.params.revId) },
+        },
+      },
+      {
+        new: true,
+      }
+    );
+    if (modifiedReview) {
+      res.status(202).send(modifiedReview);
+    } else {
+      res.status(400).send("Review id not found");
+      const error = new Error();
+      error.httpStatusCode = 404;
+      next(error);
+    }
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
