@@ -6,11 +6,11 @@ import {
   writeProducts,
   writeProductsPics,
 } from '../utils/fsUtils.js';
-import { extname } from 'path';
+
 import { createCSV } from '../utils/csv/csv.js';
 import { generatePDF } from '../utils/pdf/index.js';
-import { pipeline } from 'stream';
 import { asyncPipeline } from '../utils/streams/pipleline.js';
+import ProductModel from '../models/Products.js';
 
 // @desc    Get all products
 // @route   GET /products
@@ -19,6 +19,14 @@ export const getProducts = async (req, res, next) => {
     const products = await fetchProducts();
 
     res.status(200).send({ success: true, data: products });
+  } catch (error) {
+    next(error);
+  }
+};
+// @desc    Get a product
+// @route   GET /products/:id
+export const getProduct = async (req, res, next) => {
+  try {
   } catch (error) {
     next(error);
   }
@@ -73,20 +81,10 @@ export const getProductsByQuery = async (req, res, next) => {
 
 export const addProduct = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-    const newProduct = {
-      ...req.body,
-      _id: uuidv4(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    console.log(products);
-    // const productAlreadyPresent = products.some(prod => {
-    //   if(prod.name.LowerCase() === newProduct.name.toLowerCase() || )
-    // })
-    products.push(newProduct);
-    await writeProducts(products);
-    res.status(201).send({ success: true, _id: newProduct._id });
+    const newProd = { ...req.body };
+    const savedProd = await ProductModel.create(newProd);
+    const { _id } = savedProd;
+    res.status(201).send({ success: true, _id: _id });
   } catch (error) {
     return next(error);
   }
@@ -222,6 +220,26 @@ export const getProductPDF = async (req, res, next) => {
     } else {
       next(new ErrorResponse('Product not found', 404));
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+// REVIEWS--------------------------------------
+export const postReviewOnProductId = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+export const modifyReview = async (req, res, next) => {
+  try {
+  } catch (error) {
+    next(error);
+  }
+};
+export const deleteReview = async (req, res, next) => {
+  try {
   } catch (error) {
     next(error);
   }

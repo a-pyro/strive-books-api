@@ -42,7 +42,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/products', productsRoutes);
-app.use('/reviews', reviewsRoutes);
+// app.use('/reviews', reviewsRoutes);
 app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
