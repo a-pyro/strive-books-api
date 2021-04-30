@@ -7,39 +7,19 @@ import {
   addProduct,
   modifyProduct,
   deleteProduct,
-  // uploadProductPic,
   getProductReviews,
-  // getProductsByQuery,
   getProductsCsv,
   getProductPDF,
   postReviewOnProductId,
   getProductsByQuery,
 } from '../controllers/products.js';
-// import { validateProduct } from '../middlewares/validation/productsValidation.js';
-// import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
-// import {
-//   deleteReview,
-//   modifyReview,
-//   postReviewOnProductId,
-// } from '../controllers/reviews.js';
-// const upload = multerUploadCloudinary();
-const router = Router();
 
-// router
-//   .route('/')
-//   .get(getProductsByQuery, getProducts)
-//   .post(validateProduct, addProduct);
+const router = Router();
 
 router.route('/exportToCSV').get(getProductsCsv);
 
-// router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
-// router.route('/:id').put(validateProduct, modifyProduct).delete(deleteProduct);
-
 router.route('/').get(getProductsByQuery, getProducts).post(addProduct);
 router.route('/:id').put(modifyProduct).delete(deleteProduct).get(getProduct);
-
-// router.route('/:id/upload').post(upload, uploadProductPic);
-// router.route('/:id/upload').post(upload, uploadProductPic); 🚫
 
 router.route('/:id/reviews').post(postReviewOnProductId).get(getProductReviews);
 router.route('/:id/reviews/:revId').put(modifyReview);

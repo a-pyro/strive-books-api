@@ -13,7 +13,7 @@ import ProductModel from '../models/Products.js';
 import q2m from 'query-to-mongo';
 
 // @desc    Get all products by query
-// @route   GET /products?
+//& @route   GET /products? ✅
 export const getProductsByQuery = async (req, res, next) => {
   try {
     if (Object.keys(req.query).length > 0) {
@@ -49,7 +49,7 @@ export const getProductsByQuery = async (req, res, next) => {
 };
 
 // @desc    Get all products
-//& @route   GET /products
+//& @route   GET /products ✅
 export const getProducts = async (req, res, next) => {
   try {
     const products = await ProductModel.find({});
@@ -70,7 +70,7 @@ export const getProduct = async (req, res, next) => {
 };
 
 // @desc    add product
-//& @route   POST /products
+//& @route   POST /products ✅
 export const addProduct = async (req, res, next) => {
   try {
     const newProd = { ...req.body };
@@ -87,32 +87,13 @@ export const addProduct = async (req, res, next) => {
 
 export const modifyProduct = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-    let modifiedProduct;
-
-    if (products.some((prod) => prod._id === req.params.id)) {
-      const newProducts = products.reduce((acc, cv) => {
-        if (cv._id === req.params.id) {
-          modifiedProduct = { ...cv, ...req.body, updatedAt: new Date() };
-          acc.push(modifiedProduct);
-          return acc;
-        }
-        acc.push(cv);
-        return acc;
-      }, []);
-
-      await writeProducts(newProducts);
-      res.status(200).send({ success: true, data: modifiedProduct });
-    } else {
-      next(new ErrorResponse('Product not found', 404));
-    }
   } catch (error) {
     next(error);
   }
 };
 
 // @desc    delete product
-//& @route   DELETE /products/:id
+//& @route   DELETE /products/:id ✅
 
 export const deleteProduct = async (req, res, next) => {
   try {
@@ -129,7 +110,7 @@ export const deleteProduct = async (req, res, next) => {
 // REVIEWS--------------------------------------
 
 // @desc    add reviews for a product
-//& @route   POST /products/:id/reviews
+//& @route   POST /products/:id/reviews ✅
 export const postReviewOnProductId = async (req, res, next) => {
   try {
     const rev = { ...req.body };
@@ -162,6 +143,7 @@ export const modifyReview = async (req, res, next) => {
     next(error);
   }
 };
+
 export const deleteReview = async (req, res, next) => {
   try {
   } catch (error) {
