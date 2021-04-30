@@ -23,6 +23,10 @@ export const getUser = async (req, res, next) => {
 // POST /
 export const addUser = async (req, res, next) => {
   try {
+    const { email } = req.body;
+    const user = await UserModel.findOne({ email });
+    if (user) return next(new ErrorResponse('user alredy registered'), 404);
+
     const newUser = { ...req.body };
     const savedUser = await UserModel.create(newUser);
 

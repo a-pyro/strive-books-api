@@ -13,8 +13,11 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,
       lowercase: true,
+      required: true,
+      match: /.+\@.+\..+/,
+      unique: true,
+      dropDups: true,
     },
     age: {
       type: Number,
