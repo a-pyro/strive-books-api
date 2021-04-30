@@ -37,7 +37,10 @@ export const getProductsByQuery = async (req, res, next) => {
 
       res.status(200).send({
         success: true,
-        links: query.links('/products', total),
+        links: `${req.protocol}://${req.get('host')}${query.links(
+          '/products',
+          total
+        )}`,
         total,
         data: products,
       });
