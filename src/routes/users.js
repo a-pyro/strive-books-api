@@ -8,13 +8,14 @@ import {
   editUser,
   getProductFromPurchaseHistory,
   getPurchaseHistory,
+  getUser,
   getUsers,
 } from '../controllers/users.js';
 
 const router = Router();
 
 router.route('/').get(getUsers).post(addUser);
-router.route('/:id').put(editUser).delete(deleteUser);
+router.route('/:id').put(editUser).delete(deleteUser).get(getUser);
 
 router
   .route('/:id/purchaseHistory')

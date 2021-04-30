@@ -1,8 +1,19 @@
 import UserModel from '../models/Users.js';
+import ErrorResponse from '../utils/errorResponse.js';
 // GET /
 export const getUsers = async (req, res, next) => {
   try {
     res.status(200).send({ success: true, data: 'getUsers' });
+  } catch (error) {
+    next(error);
+  }
+};
+// Get /:id
+export const getUser = async (req, res, next) => {
+  try {
+    const user = await UserModel.findById(req.params.id);
+    if (!user) return next(new ErrorResponse('resource not found'), 404);
+    res.status(200).send({ success: true, data: user });
   } catch (error) {
     next(error);
   }
