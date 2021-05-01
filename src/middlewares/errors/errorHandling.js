@@ -10,6 +10,19 @@ export const routeNotFoundHandler = (req, res, next) => {
   }
 };
 export const errorHandler = async (err, req, res, next) => {
+  if (err.origin === 'multerExt') {
+    return res.status(err.statusCode).send({
+      success: false,
+      message: err.message,
+    });
+  }
+
+  if (err.field && err.field !== 'productPic') {
+    return res.status(400).send({
+      success: false,
+      message: `productPic expected as fieldname, you sent ${err.field}`,
+    });
+  }
   console.log(err);
   let error = { ...err };
   error.message = err.message;

@@ -4,10 +4,7 @@ import cors from 'cors';
 import productsRoutes from './routes/products.js';
 import usersRoutes from './routes/users.js';
 import cartsRoutes from './routes/carts.js';
-import reviewsRoutes from './routes/reviews.js';
-import homeRoute from './routes/home.js';
 import mongoose from 'mongoose';
-import moduleName from 'module';
 import listEndpoints from 'express-list-endpoints';
 
 const { connect } = mongoose;
@@ -37,8 +34,6 @@ const corsOptions = {
     }
   },
 };
-
-app.use('/', homeRoute);
 
 app.use(cors());
 // app.use(cors(corsOptions));

@@ -1,5 +1,5 @@
-import { Router } from "express";
-import mongoose from "mongoose";
+import { Router } from 'express';
+import mongoose from 'mongoose';
 import {
   modifyReview,
   deleteReview,
@@ -13,19 +13,24 @@ import {
   getProductPDF,
   postReviewOnProductId,
   getProductsByQuery,
-} from "../controllers/products.js";
+  uploadProductPic,
+} from '../controllers/products.js';
+import multerUploadCloudinary from '../middlewares/products/pictureUpload.js';
+const upload = multerUploadCloudinary();
 
 const router = Router();
 
-router.route("/exportToCSV").get(getProductsCsv);
+router.route('/exportToCSV').get(getProductsCsv);
+// products
+router.route('/').get(getProductsByQuery, getProducts).post(addProduct);
+router.route('/:id').put(modifyProduct).delete(deleteProduct).get(getProduct);
+router.route('/:id/upload').post(upload, uploadProductPic);
 
-router.route("/").get(getProductsByQuery, getProducts).post(addProduct);
-router.route("/:id").put(modifyProduct).delete(deleteProduct).get(getProduct);
+// review
+router.route('/:id/reviews').post(postReviewOnProductId).get(getProductReviews);
+router.route('/:id/reviews/:revId').put(modifyReview);
+router.route('/:id/reviews/:revId').delete(deleteReview);
 
-router.route("/:id/reviews").post(postReviewOnProductId).get(getProductReviews);
-router.route("/:id/reviews/:revId").put(modifyReview);
-router.route("/:id/reviews/:revId").delete(deleteReview);
-
-router.route("/:id/pdf").get(getProductPDF);
+router.route('/:id/pdf').get(getProductPDF);
 
 export default router;

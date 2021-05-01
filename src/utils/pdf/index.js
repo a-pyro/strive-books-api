@@ -1,37 +1,56 @@
-import PdfPrinter from 'pdfmake';
 import axios from 'axios';
+import PdfPrinter from 'pdfmake';
 
-export const generatePDF = async (data) => {
+const fetchImg = async (endpoint) => {
   try {
-    const resp = await axios.get(data.imgUrl, { responseType: 'arraybuffer' });
+    const resp = await axios.get(endpoint, {
+      responseType: 'arraybuffer',
+    });
+    const result = Buffer.from(resp.data, 'base64');
+    return result;
+  } catch (error) {
+    console.log('fetchImg: ', error);
+  }
+};
 
-    const raw = Buffer.from(resp.data).toString('base64');
-
-    const image = 'data:' + resp.headers['content-type'] + ';base64,' + raw;
+export const generatePDF = async (product) => {
+  try {
     const fonts = {
       Roboto: {
-        normal: 'Courier',
-        bold: 'Courier-Bold',
-        italics: 'Courier-Oblique',
-        bolditalics: 'Courier-BoldOblique',
+        normal: 'Helvetica',
+        bold: 'Helvetica-Bold',
+        italics: 'Helvetica-Oblique',
+        bolditalics: 'Helvetica-BoldOblique',
       },
     };
+    const url = await fetchImg(product.imageUrl);
+    const image = { image: url };
 
     const printer = new PdfPrinter(fonts);
 
     const docDefinition = {
       content: [
+        { text: `${product.Name}`, style: 'header' },
         {
-          image: image,
+          ul: [
+            `${'Brand: ' + product.Brand}`,
+            `${'Category: ' + product.Category}`,
+            `${'Description: ' + product.Description}`,
+            `${'Price: ' + product.Price}`,
+          ],
         },
+        image,
       ],
+      defaultStyle: {
+        lineHeight: 2,
+      },
     };
 
     const sourceStream = printer.createPdfKitDocument(docDefinition);
-
     sourceStream.end();
+
     return sourceStream;
   } catch (error) {
-    console.log('pdf make', error);
+    console.log('generatePDFcatalogue: ', error);
   }
 };

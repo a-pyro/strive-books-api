@@ -1,14 +1,8 @@
-import { v4 as uuidv4 } from 'uuid';
 import ErrorResponse from '../utils/errorResponse.js';
-import {
-  fetchProducts,
-  fetchReviews,
-  writeProducts,
-  writeProductsPics,
-} from '../utils/fsUtils.js';
-
+import { fetchProducts, writeProducts } from '../utils/fsUtils.js';
 import { createCSV } from '../utils/csv/csv.js';
 import { generatePDF } from '../utils/pdf/index.js';
+import { asyncPipeline } from '../utils/streams/pipleline.js';
 import ProductModel from '../models/Products.js';
 import mongoose from 'mongoose';
 import q2m from 'query-to-mongo';
@@ -92,29 +86,21 @@ export const addProduct = async (req, res, next) => {
 
 // @desc    modify  product
 // @route   PUT /products/:id
-
 export const modifyProduct = async (req, res, next) => {
   try {
-    let product = await ProductModel.findById(req.params.id);
-    console.log(product);
-    if (product) {
-      let modifiedProduct = await ProductModel.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        {
-          runValidators: true,
-          new: true,
-          useFindAndModify: false,
-        }
-      );
-      if (modifiedProduct) {
-        res.status(200).send(modifiedProduct);
-      } else {
-        next();
+    let modifiedProduct = await ProductModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      {
+        runValidators: true,
+        new: true,
+        useFindAndModify: false,
       }
+    );
+    if (modifiedProduct) {
+      res.status(200).send(modifiedProduct);
     } else {
-      console.log(error);
-      next(error);
+      return next(new ErrorResponse('resource not found', 404));
     }
   } catch (error) {
     next(error);
@@ -158,7 +144,7 @@ export const postReviewOnProductId = async (req, res, next) => {
     next(error);
   }
 };
-
+// GET products/:id/reviews
 export const getProductReviews = async (req, res, next) => {
   try {
     // deconstructed reviews object uses mongoose method findbyId with Product id from the params.
@@ -174,6 +160,7 @@ export const getProductReviews = async (req, res, next) => {
   }
 };
 
+// PUT products/:id/reviews/:revId
 export const modifyReview = async (req, res, next) => {
   try {
     const modifiedReview = await ProductModel.findOneAndUpdate(
@@ -191,10 +178,7 @@ export const modifyReview = async (req, res, next) => {
     if (modifiedReview) {
       res.status(201).send(modifiedReview);
     } else {
-      res.status(400).send('Product id not found');
-      const error = new Error();
-      error.httpStatusCode = 404;
-      next(error);
+      next(new ErrorResponse('resource not found', 404));
     }
   } catch (error) {
     console.log(error);
@@ -202,6 +186,7 @@ export const modifyReview = async (req, res, next) => {
   }
 };
 
+// DELETE products/:id/reviews/:revId
 export const deleteReview = async (req, res, next) => {
   try {
     const modifiedReview = await ProductModel.findByIdAndUpdate(
@@ -218,10 +203,7 @@ export const deleteReview = async (req, res, next) => {
     if (modifiedReview) {
       res.status(202).send(modifiedReview);
     } else {
-      res.status(400).send('Review id not found');
-      const error = new Error();
-      error.httpStatusCode = 404;
-      next(error);
+      next(new ErrorResponse('resource not found', 404));
     }
   } catch (error) {
     console.log(error);
@@ -238,18 +220,12 @@ export const deleteReview = async (req, res, next) => {
 
 export const getProductPDF = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-    if (products.some((prod) => prod._id === req.params.id)) {
-      const data = products.find((prod) => prod._id === req.params.id);
-      const sourceStream = await generatePDF(data);
+    const product = await ProductModel.findById(req.params.id, { reviews: 0 });
+    console.log(product);
+    if (product) {
+      const sourceStream = await generatePDF(product);
       res.attachment('data.pdf');
-
-      // pipeline(sourceStream, res, () => {
-
-      //   console.log('hi');
-      // });
       await asyncPipeline(sourceStream, res);
-
       res.send('ciao');
     } else {
       next(new ErrorResponse('Product not found', 404));
@@ -274,29 +250,11 @@ export const getProductsCsv = async (req, res, next) => {
 // @route   POST /products/:id/upload
 export const uploadProductPic = async (req, res, next) => {
   try {
-    const products = await fetchProducts();
-    if (products.some((prod) => prod._id === req.params.id)) {
-      // console.log(req.file);
-      // const { buffer, originalname } = req.file;
-      // const filename = req.params.id + extname(originalname);
-      // const imgUrl = `${req.protocol}://${req.get(
-      //   'host'
-      // )}/img/products/${filename}`;
-      // //scrivo nel file url
-      const newProducts = products.reduce((acc, cv) => {
-        if (cv._id === req.params.id) {
-          cv.imgUrl = req.file.path;
-          cv.updatedAt = new Date();
-          acc.push(cv);
-          return acc;
-        }
-        acc.push(cv);
-        return acc;
-      }, []);
-      await writeProducts(newProducts);
-      // await writeProductsPics(filename, buffer); non serve scrivere, vado su cloudinary
-      // console.log(req.file);
-      res.status(200).send({ success: true, cloudinaryUrl: req.file.path });
+    const product = await ProductModel.findByIdAndUpdate(req.params.id, {
+      imageUrl: req.file.path,
+    });
+    if (product) {
+      res.status(200).send({ success: true, data: product });
     } else {
       next(new ErrorResponse('Product not found', 404));
     }
