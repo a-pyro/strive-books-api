@@ -16,9 +16,7 @@ const UserSchema = new Schema(
       type: String,
       lowercase: true,
       required: true,
-      match: /.+\@.+\..+/,
-      unique: true,
-      dropDups: true,
+      match: [/.+\@.+\..+/, 'please insert valid email adddress'],
     },
     age: {
       type: Number,
@@ -34,7 +32,7 @@ const UserSchema = new Schema(
         date: Date,
       },
     ],
-    cart: [CartSchema],
+    cart: { type: Schema.Types.Object, CartSchema },
   },
   { timestamps: true }
 );

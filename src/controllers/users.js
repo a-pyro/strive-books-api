@@ -9,6 +9,7 @@ export const getUsers = async (req, res, next) => {
     next(error);
   }
 };
+
 // Get /:id
 export const getUser = async (req, res, next) => {
   try {

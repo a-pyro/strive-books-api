@@ -43,7 +43,7 @@ app.use(express.json());
 app.use('/products', productsRoutes);
 app.use('/users', usersRoutes);
 app.use('/carts', cartsRoutes);
-// app.use('/reviews', reviewsRoutes);
+
 app.use(routeNotFoundHandler);
 app.use(errorHandler);
 
