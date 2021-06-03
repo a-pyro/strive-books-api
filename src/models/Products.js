@@ -37,7 +37,7 @@ const ProductSchema = new Schema(
 
     category: {
       type: String,
-      required: [true, 'Please add a healine'],
+      required: [true, 'Please add a category'],
       trim: true,
       maxlength: [30, 'Headline cannot be more than 50 chars'],
     },
